@@ -1,0 +1,9 @@
+from dataclasses import dataclass
+
+from models.classification.classification_model_configuration import ClassificationModelConfiguration
+from models.video.video_model_configuration import VideoModelConfiguration
+
+
+@dataclass
+class VideoClassificationModelConfiguration(VideoModelConfiguration, ClassificationModelConfiguration):
+    pass
