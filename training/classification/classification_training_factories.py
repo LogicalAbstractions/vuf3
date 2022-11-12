@@ -10,6 +10,7 @@ from torch import Tensor
 from data.classification.classification_mapping import ClassificationMapping
 from models.classification.classification_model_configuration import ClassificationModelConfiguration
 from models.classification.classification_module import ClassificationModule
+from models.export.onnx_export import export_classification_model_to_onnx
 from training.classification.classification_training_configuration import ClassificationTrainingConfiguration
 from utilities.configuration.configuration_reader import ConfigurationReader
 from utilities.json import print_json
@@ -107,7 +108,6 @@ def run_classification_training(configuration_reader: ConfigurationReader,
 
     onnx_path = configuration_reader.get_artifact_path() / "model.onnx"
 
-    print("Exporting to onnx: " + str(onnx_path))
-    model.export_onnx(model_configuration, configuration_reader.get_artifact_path() / "model.onnx")
+    export_classification_model_to_onnx(onnx_path, model, model_configuration)
 
     return test_metrics, confusion_matrix

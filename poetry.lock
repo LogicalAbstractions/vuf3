@@ -128,6 +128,17 @@ humanfriendly = ">=9.1"
 cron = ["capturer (>=2.4)"]
 
 [[package]]
+name = "commonmark"
+version = "0.9.1"
+description = "Python parser for the CommonMark Markdown spec"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.extras]
+test = ["flake8 (==3.7.8)", "hypothesis (==3.55.3)"]
+
+[[package]]
 name = "dataclass-wizard"
 version = "0.22.2"
 description = "Marshal dataclasses to/from JSON. Use field properties with initial values. Construct a dataclass schema with JSON input."
@@ -483,6 +494,18 @@ protobuf = "*"
 sympy = "*"
 
 [[package]]
+name = "onnxsim"
+version = "0.4.9"
+description = "Simplify your ONNX model"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+onnx = "*"
+rich = "*"
+
+[[package]]
 name = "packaging"
 version = "21.3"
 description = "Core utilities for Python packages"
@@ -607,6 +630,17 @@ python-versions = "*"
 pyasn1 = ">=0.4.6,<0.5.0"
 
 [[package]]
+name = "pygments"
+version = "2.13.0"
+description = "Pygments is a syntax highlighting package written in Python."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+plugins = ["importlib-metadata"]
+
+[[package]]
 name = "pyparsing"
 version = "3.0.9"
 description = "pyparsing module - Classes and methods to define and execute parsing grammars"
@@ -727,6 +761,21 @@ requests = ">=2.0.0"
 
 [package.extras]
 rsa = ["oauthlib[signedtoken] (>=3.0.0)"]
+
+[[package]]
+name = "rich"
+version = "12.6.0"
+description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
+category = "main"
+optional = false
+python-versions = ">=3.6.3,<4.0.0"
+
+[package.dependencies]
+commonmark = ">=0.9.0,<0.10.0"
+pygments = ">=2.6.0,<3.0.0"
+
+[package.extras]
+jupyter = ["ipywidgets (>=7.5.1,<8.0.0)"]
 
 [[package]]
 name = "rsa"
@@ -1086,7 +1135,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "1d58d86eb26da539e2bff5befe89cf0b70b8f9e48a08ed80b84b85a05671a9a7"
+content-hash = "ec451965146a55ef4b70539eb32adea130d095818cd47e1b0989be005049bc3e"
 
 [metadata.files]
 absl-py = [
@@ -1263,6 +1312,10 @@ colorama = [
 coloredlogs = [
     {file = "coloredlogs-15.0.1-py2.py3-none-any.whl", hash = "sha256:612ee75c546f53e92e70049c9dbfcc18c935a2b9a53b66085ce9ef6a6e5c0934"},
     {file = "coloredlogs-15.0.1.tar.gz", hash = "sha256:7c991aa71a4577af2f82600d8f8f3a89f936baeaf9b50a9c197da014e5bf16b0"},
+]
+commonmark = [
+    {file = "commonmark-0.9.1-py2.py3-none-any.whl", hash = "sha256:da2f38c92590f83de410ba1a3cbceafbc74fee9def35f9251ba9a971d6d66fd9"},
+    {file = "commonmark-0.9.1.tar.gz", hash = "sha256:452f9dc859be7f06631ddcb328b6919c67984aca654e5fefb3914d54691aed60"},
 ]
 dataclass-wizard = [
     {file = "dataclass-wizard-0.22.2.tar.gz", hash = "sha256:211f842e5e9a8ace50ba891ef428cd78c82579fb98024f80f3e630ca8d1946f6"},
@@ -1626,6 +1679,22 @@ onnxruntime-gpu = [
     {file = "onnxruntime_gpu-1.13.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:40e468102d0bda6704bd2edea2946e413110be1288803a8597f0cf001a0a0233"},
     {file = "onnxruntime_gpu-1.13.1-cp39-cp39-win_amd64.whl", hash = "sha256:5347fe3a6f2f723e2f94ea625310dc37f31146c4517329c9532954410cf9b72e"},
 ]
+onnxsim = [
+    {file = "onnxsim-0.4.9-cp310-cp310-macosx_10_15_universal2.whl", hash = "sha256:cf3d1ef35f25a97befeb4e78947fc45cde923305baf3b4c2820253ee70245195"},
+    {file = "onnxsim-0.4.9-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:c4bb49f91ec9788515b4608f259bb70eb305a23caac52f749b0fd1f9fc4315d1"},
+    {file = "onnxsim-0.4.9-cp310-cp310-win_amd64.whl", hash = "sha256:b53caa8bc86953bbc1b3e0e92f46c84e4a68cbc9afa61c748fa67dea1d9eea5c"},
+    {file = "onnxsim-0.4.9-cp36-cp36m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:2a68d17a16736c1ec3fba083e69d593c5cdefee38e55eda245cd00fbda811f7f"},
+    {file = "onnxsim-0.4.9-cp36-cp36m-win_amd64.whl", hash = "sha256:8f34e7e08b67f4e8e9629aa2faed25ba9479cfc021a968123b5fa1bc296b3b3d"},
+    {file = "onnxsim-0.4.9-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:30e7df8a3904cdb4d133dae30d451a47cbe9d23024af0a822c284d382e227ffd"},
+    {file = "onnxsim-0.4.9-cp37-cp37m-win_amd64.whl", hash = "sha256:5c83259f2bb923d19d3b0f873dab0d1ef2c9f6ba32d5a849ccdd93540deeb5f5"},
+    {file = "onnxsim-0.4.9-cp38-cp38-macosx_10_15_universal2.whl", hash = "sha256:0b5289f7685e65a53397518e27505dd3674d88d4acef5e738edde4f8d1398e56"},
+    {file = "onnxsim-0.4.9-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e977f99cd6b8067fc768d65c0539c0f95689794d748833e18166470b8c7b2e48"},
+    {file = "onnxsim-0.4.9-cp38-cp38-win_amd64.whl", hash = "sha256:e4d2f7bce8096c4f6adf053b688be5fd33dab2bd842af3cb53f0612d20a927ac"},
+    {file = "onnxsim-0.4.9-cp39-cp39-macosx_10_15_universal2.whl", hash = "sha256:02341775f8b9737d756a64267f779958c240d64e1b4c0bd7ec5a714abf4786c1"},
+    {file = "onnxsim-0.4.9-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:f8b1dedb000810878c6b27689122062a5934a62fe01c9331a4e2999f3fd649a4"},
+    {file = "onnxsim-0.4.9-cp39-cp39-win_amd64.whl", hash = "sha256:7250685d0bbddb0c029a213a17f33b816e8b2b9b70efd46c8cf8a4fbc69e7152"},
+    {file = "onnxsim-0.4.9.tar.gz", hash = "sha256:9c9467adfed673976a6bd67ccf7573e487a7a9f96f4924ec685b1d7367de07d7"},
+]
 packaging = [
     {file = "packaging-21.3-py3-none-any.whl", hash = "sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"},
     {file = "packaging-21.3.tar.gz", hash = "sha256:dd47c42927d89ab911e606518907cc2d3a1f38bbd026385970643f9c5b8ecfeb"},
@@ -1761,6 +1830,10 @@ pyasn1-modules = [
     {file = "pyasn1-modules-0.2.8.tar.gz", hash = "sha256:905f84c712230b2c592c19470d3ca8d552de726050d1d1716282a1f6146be65e"},
     {file = "pyasn1_modules-0.2.8-py2.py3-none-any.whl", hash = "sha256:a50b808ffeb97cb3601dd25981f6b016cbb3d31fbf57a8b8a87428e6158d0c74"},
 ]
+pygments = [
+    {file = "Pygments-2.13.0-py3-none-any.whl", hash = "sha256:f643f331ab57ba3c9d89212ee4a2dabc6e94f117cf4eefde99a0574720d14c42"},
+    {file = "Pygments-2.13.0.tar.gz", hash = "sha256:56a8508ae95f98e2b9bdf93a6be5ae3f7d8af858b43e02c5a2ff083726be40c1"},
+]
 pyparsing = [
     {file = "pyparsing-3.0.9-py3-none-any.whl", hash = "sha256:5026bae9a10eeaefb61dab2f09052b9f4307d44aee4eda64b309723d8d206bbc"},
     {file = "pyparsing-3.0.9.tar.gz", hash = "sha256:2b020ecf7d21b687f219b71ecad3631f644a47f01403fa1d1036b0c6416d70fb"},
@@ -1841,6 +1914,10 @@ requests = [
 requests-oauthlib = [
     {file = "requests-oauthlib-1.3.1.tar.gz", hash = "sha256:75beac4a47881eeb94d5ea5d6ad31ef88856affe2332b9aafb52c6452ccf0d7a"},
     {file = "requests_oauthlib-1.3.1-py2.py3-none-any.whl", hash = "sha256:2577c501a2fb8d05a304c09d090d6e47c306fef15809d102b327cf8364bddab5"},
+]
+rich = [
+    {file = "rich-12.6.0-py3-none-any.whl", hash = "sha256:a4eb26484f2c82589bd9a17c73d32a010b1e29d89f1604cd9bf3a2097b81bb5e"},
+    {file = "rich-12.6.0.tar.gz", hash = "sha256:ba3a3775974105c221d31141f2c116f4fd65c5ceb0698657a11e9f295ec93fd0"},
 ]
 rsa = [
     {file = "rsa-4.9-py3-none-any.whl", hash = "sha256:90260d9058e514786967344d0ef75fa8727eed8a7d2e43ce9f4bcf1b536174f7"},
