@@ -49,7 +49,7 @@ def run_classification_training(configuration_reader: ConfigurationReader,
         callbacks.append(ModelPruning(training_configuration.pruning, amount=training_configuration.pruning_amount))
 
     if training_configuration.early_stopping > 0:
-        print("Enabling early stopping")
+        print("Enabling early stopping: " + str(training_configuration.early_stopping))
         callbacks.append(EarlyStopping(monitor="val_loss", mode="min", patience=training_configuration.early_stopping))
 
     if training_configuration.swa_lrs > 0.0:
