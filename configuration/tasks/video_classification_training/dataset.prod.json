@@ -1,4 +1,4 @@
 {
-  "type": "folder",
-  "path": "/media/bglueck/Data/Datasets/soccernet-datasets/4sec-5fps/large/train"
+  "path": "/mnt/vol_b/data/4sec-5fps/large/train",
+  "test_path": "/mnt/vol_b/data/4sec-5fps/large/test"
 }
