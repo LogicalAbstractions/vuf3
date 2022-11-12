@@ -13,7 +13,7 @@ class TrainingConfiguration(JSONWizard, ABC):
     learning_rate: float = 1.003
     auto_find_learning_rate: bool = False
     reduce_lr_on_plateau: bool = False
-    early_stopping: bool = False
+    early_stopping: int = 0
     swa_lrs: float = -1.0
     pruning: str = "l1_unstructured"
     pruning_amount: float = 0.5

@@ -48,9 +48,9 @@ def run_classification_training(configuration_reader: ConfigurationReader,
             training_configuration.pruning_amount))
         callbacks.append(ModelPruning(training_configuration.pruning, amount=training_configuration.pruning_amount))
 
-    if training_configuration.early_stopping:
+    if training_configuration.early_stopping > 0:
         print("Enabling early stopping")
-        callbacks.append(EarlyStopping(monitor="val_loss", mode="min"))
+        callbacks.append(EarlyStopping(monitor="val_loss", mode="min", patience=training_configuration.early_stopping))
 
     if training_configuration.swa_lrs > 0.0:
         print("Enabling stochastic weight averaging: " + str(training_configuration.swa_lrs))
