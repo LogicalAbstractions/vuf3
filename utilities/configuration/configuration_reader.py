@@ -54,7 +54,7 @@ class ConfigurationReader:
 
         for search_path in self.search_paths:
             file_path = search_path / filename
-            print("Trying file: " + str(file_path))
+            print(f"Trying file: {file_path}, exists: {file_path.exists()}")
             self.__read_file_with_environment__(file_path, json_data)
 
         result: Dict[str, any] = dict()
