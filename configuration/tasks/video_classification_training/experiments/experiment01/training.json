@@ -1,6 +1,6 @@
 {
-  "batch-size": 4,
-  "accumulate_batches": 8,
+  "batch-size": 8,
+  "accumulate_batches": 4,
   "epochs": 50,
   "dataloader_workers": 4,
   "balance_dataset": false,
@@ -13,6 +13,7 @@
   "pruning": null,
   "pruning_amount": 0.5,
   "gradient_clipping": -1,
+  "precision": 16,
   "early_stopping": 5,
   "accelerator": "gpu",
   "device_count": -1,
