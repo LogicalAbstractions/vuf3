@@ -1,7 +1,7 @@
 {
-  "batch-size": 8,
+  "batch-size": 4,
   "epochs": 200,
-  "dataloader_workers": 16,
+  "dataloader_workers": 4,
   "balance_dataset": true,
   "learning_rate": 1.003,
   "auto_find_learning_rate": false,

@@ -1,5 +1,5 @@
 {
-  "batch-size": 2,
+  "batch-size": 8,
   "epochs": 20,
   "dataloader_workers": 4,
   "balance_dataset": true,
