@@ -15,7 +15,7 @@ class VideoClassificationModelProvider(ClassificationModelProvider):
         super(VideoClassificationModelProvider, self).__init__(id)
         self.factory = factory
 
-    def __create_classifier__(self, configuration_reader: ConfigurationReader, num_classes: int) -> Module:
+    def create_classifier(self, configuration_reader: ConfigurationReader, num_classes: int) -> Module:
         model_configuration: VideoClassificationModelConfiguration = configuration_reader.read_object(
             VideoClassificationModelConfiguration)
 

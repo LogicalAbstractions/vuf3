@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from typing import Dict, Optional, Type
 
 import torch
@@ -39,6 +40,3 @@ def create_classification_module(configuration_reader: ConfigurationReader,
         raise ModuleNotFoundError(name=base_id)
 
     return model_provider.create_module(configuration_reader, num_classes, class_weights)
-
-
-

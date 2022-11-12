@@ -1,6 +1,6 @@
 {
-  "batch-size": 4,
-  "epochs": 4,
+  "batch-size": 2,
+  "epochs": 20,
   "dataloader_workers": 4,
   "balance_dataset": true,
   "learning_rate": 1.003,
@@ -9,7 +9,7 @@
   "quantization_aware": false,
   "quantization_keep_inputs": false,
   "swa_lrs": -1,
-  "pruning": "l1_unstructured",
+  "pruning": null,
   "pruning_amount": 0.5,
   "gradient_clipping": -1,
   "early_stopping": false,

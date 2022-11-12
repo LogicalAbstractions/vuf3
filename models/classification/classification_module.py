@@ -20,15 +20,15 @@ class ClassificationModule(LightningModule):
                  classifier: Module,
                  num_classes: int,
                  class_weights: Optional[Dict[ModelTask, torch.Tensor]] = None,
-                 learning_rate: float = 1e-03, reduce_lr_on_plateau: bool = False):
-        super(ClassificationModule, self).__init__()
+                 learning_rate: float = 1e-03, reduce_lr_on_plateau: bool = False, *args, **kwargs):
+        super(ClassificationModule, self).__init__(*args, **kwargs)
 
         self.classifier = classifier
         self.num_classes = num_classes
         self.class_weights = class_weights
         self.reduce_lr_on_plateau = reduce_lr_on_plateau
 
-        self.save_hyperparameters()
+        self.save_hyperparameters("num_classes", "class_weights", "learning_rate", "reduce_lr_on_plateau")
         self.metrics = create_classification_metrics(num_classes)
         self.test_confusion_matrix = ConfusionMatrix(num_classes)
         self.test_confusion_matrix_accumulator: Optional[torch.Tensor] = None

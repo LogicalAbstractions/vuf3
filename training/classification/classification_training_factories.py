@@ -1,10 +1,9 @@
-import json
-from pathlib import Path
-from typing import Type, List, Dict, Tuple
+from typing import Type, Tuple
 
+import torch
 from pytorch_lightning import Trainer, LightningDataModule
 from pytorch_lightning.callbacks import EarlyStopping, StochasticWeightAveraging, ModelPruning, \
-    QuantizationAwareTraining
+    QuantizationAwareTraining, ModelCheckpoint
 from pytorch_lightning.loggers import WandbLogger
 from torch import Tensor
 
@@ -37,10 +36,14 @@ def run_classification_training(configuration_reader: ConfigurationReader,
         logger = WandbLogger(
             save_dir=str(configuration_reader.get_artifact_path() / "wandb"),
             project=training_configuration.wandb_project)
+        logger.experiment.config.update(model_configuration.to_dict())
+        logger.experiment.config.update(training_configuration.to_dict())
 
     callbacks = list()
 
-    if training_configuration.pruning is not None:
+    callbacks.append(ModelCheckpoint(save_last=True, monitor="val_loss", mode="min", save_weights_only=True))
+
+    if training_configuration.pruning is not None and len(training_configuration.pruning) > 0:
         print("Enabling model pruning: " + training_configuration.pruning + ", amount: " + str(
             training_configuration.pruning_amount))
         callbacks.append(ModelPruning(training_configuration.pruning, amount=training_configuration.pruning_amount))
@@ -82,7 +85,10 @@ def run_classification_training(configuration_reader: ConfigurationReader,
     trainer.fit(model=model, datamodule=data_module)
 
     print("Best model at: " + trainer.checkpoint_callback.best_model_path)
-    final_model = model.load_from_checkpoint(trainer.checkpoint_callback.best_model_path)
+
+    checkpoint = torch.load(trainer.checkpoint_callback.best_model_path)
+    model.load_state_dict(checkpoint["state_dict"])
+    final_model = model
 
     test_metrics = trainer.test(model=final_model, datamodule=data_module)
 

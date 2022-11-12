@@ -26,11 +26,11 @@ class ClassificationModelProvider(ABC):
 
         actual_class_weights = class_weights if training_configuration.balance_dataset else None
 
-        classifier = self.__create_classifier__(configuration_reader, num_classes)
+        classifier = self.create_classifier(configuration_reader, num_classes)
 
         return ClassificationModule(classifier, num_classes, actual_class_weights, training_configuration.learning_rate,
                                     training_configuration.reduce_lr_on_plateau)
 
     @abstractmethod
-    def __create_classifier__(self, configuration_reader: ConfigurationReader, num_classes: int) -> Module:
+    def create_classifier(self, configuration_reader: ConfigurationReader, num_classes: int) -> Module:
         pass
