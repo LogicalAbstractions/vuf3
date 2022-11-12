@@ -75,6 +75,7 @@ def run_classification_training(configuration_reader: ConfigurationReader,
                       precision=training_configuration.precision,
                       auto_lr_find=training_configuration.auto_find_learning_rate,
                       gradient_clip_val=gradient_clip_val,
+                      accumulate_grad_batches=training_configuration.accumulate_batches,
                       callbacks=callbacks
                       )
 

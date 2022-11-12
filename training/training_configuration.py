@@ -9,6 +9,7 @@ from dataclass_wizard import JSONWizard
 class TrainingConfiguration(JSONWizard, ABC):
     id: ClassVar[str] = "training"
     batch_size: int = 1
+    accumulate_batches: int = 1
     epochs: int = 100
     learning_rate: float = 1.003
     auto_find_learning_rate: bool = False
