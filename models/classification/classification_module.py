@@ -51,6 +51,7 @@ class ClassificationModule(LightningModule):
         return self.classifier(batch)
 
     def configure_optimizers(self) -> Any:
+        print("Using LR: " + str(self.hparams.learning_rate))
         optimizer = Adam(self.parameters(), lr=self.hparams.learning_rate)
         scheduler = ReduceLROnPlateau(optimizer, monitor="val_loss")
 

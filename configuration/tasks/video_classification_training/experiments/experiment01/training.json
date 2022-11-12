@@ -1,7 +1,7 @@
 {
   "batch-size": 4,
   "accumulate_batches": 8,
-  "epochs": 200,
+  "epochs": 50,
   "dataloader_workers": 4,
   "balance_dataset": false,
   "learning_rate": 1.003,
