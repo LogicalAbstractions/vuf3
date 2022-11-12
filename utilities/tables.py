@@ -35,9 +35,11 @@ def confusion_matrix_to_table(mapping: ClassificationMapping[str], matrix: Tenso
     return result
 
 
-def table_to_json_data(table: PrettyTable) -> List:
+def table_to_json_data(table: PrettyTable, include_header: bool= False) -> List:
     result = list()
-    result.append(table.field_names)
+
+    if include_header:
+        result.append(table.field_names)
 
     for row in table.rows:
         result.append(dict(zip(table.field_names, row)))
