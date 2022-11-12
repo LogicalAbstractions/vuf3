@@ -50,11 +50,8 @@ class ConfigurationReader:
         filename = f"{id.lower()}.json"
         json_data: List[Dict[str, Any]] = list()
 
-        print("Trying to resolve configuration: " + id)
-
         for search_path in self.search_paths:
             file_path = search_path / filename
-            print(f"Trying file: {file_path}, exists: {file_path.exists()}")
             self.__read_file_with_environment__(file_path, json_data)
 
         result: Dict[str, any] = dict()
@@ -111,15 +108,12 @@ class ConfigurationReader:
             self.__read_single_file__(environment_path, result)
 
     def __read_single_file__(self, path: Path, result: List[Dict[str, Any]]) -> bool:
-        if self.environment is not None:
-            print(f"Trying to read configuration from: {path}")
+        if path.exists():
+            with open(path, "r") as f:
+                result.append(json.load(f))
+                if self.environment == "dev":
+                    print(f"Read configuration from: {path}")
 
-            if path.exists():
-                with open(path, "r") as f:
-                    result.append(json.load(f))
-                    if self.environment == "dev":
-                        print(f"Read configuration from: {path}")
+                return True
 
-                    return True
-
-            return False
+        return False
