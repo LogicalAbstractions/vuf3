@@ -111,7 +111,7 @@ class ConfigurationReader:
             self.__read_single_file__(environment_path, result)
 
     def __read_single_file__(self, path: Path, result: List[Dict[str, Any]]) -> bool:
-        if self.environment == "dev":
+        if self.environment is not None:
             print(f"Trying to read configuration from: {path}")
 
             if path.exists():
