@@ -15,6 +15,8 @@ dataclass-wizard = "^0.22.2"
 prettytable = "^3.5.0"
 onnx = "^1.12.0"
 wandb = "^0.13.5"
+onnxruntime-gpu = "^1.13.1"
+pytorchvideo = "^0.1.5"
 
 [build-system]
 requires = ["poetry-core"]
