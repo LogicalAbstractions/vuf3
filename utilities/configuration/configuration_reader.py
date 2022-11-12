@@ -50,6 +50,8 @@ class ConfigurationReader:
         filename = f"{id.lower()}.json"
         json_data: List[Dict[str, Any]] = list()
 
+        print("Trying to resolve configuration: " + id)
+        
         for search_path in self.search_paths:
             file_path = search_path / filename
             self.__read_file_with_environment__(file_path, json_data)
