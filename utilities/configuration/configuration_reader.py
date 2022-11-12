@@ -51,9 +51,10 @@ class ConfigurationReader:
         json_data: List[Dict[str, Any]] = list()
 
         print("Trying to resolve configuration: " + id)
-        
+
         for search_path in self.search_paths:
             file_path = search_path / filename
+            print("Trying file: " + str(file_path))
             self.__read_file_with_environment__(file_path, json_data)
 
         result: Dict[str, any] = dict()
