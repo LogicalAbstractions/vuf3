@@ -35,6 +35,10 @@ class ConfigurationReader:
 
         print(f"Environment: {environment}")
         print(f"Experiment: {experiment}")
+        
+        print("Search paths:")
+        for search_path in search_paths:
+            print(search_path)
 
     def read_object(self, type: Type, id: Optional[str] = None):
         actual_id = id if id is not None else type.id
