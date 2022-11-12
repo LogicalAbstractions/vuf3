@@ -16,6 +16,16 @@ from utilities.json import print_json
 from utilities.tables import confusion_matrix_to_table
 
 
+def test_classification_model(trainer: Trainer, model: ClassificationModule, data_module: LightningDataModule,
+                              mapping: ClassificationMapping) -> Tuple[list[dict[str, float]], Tensor]:
+    test_metrics = trainer.test(model=model, datamodule=data_module)
+
+    print("Confusion")
+    print(confusion_matrix_to_table(mapping, model.test_confusion_matrix_accumulator))
+
+    return test_metrics, model.test_confusion_matrix_accumulator
+
+
 def run_classification_training(configuration_reader: ConfigurationReader,
                                 model_configuration_type: Type,
                                 data_module: LightningDataModule,
@@ -85,20 +95,19 @@ def run_classification_training(configuration_reader: ConfigurationReader,
 
     trainer.fit(model=model, datamodule=data_module)
 
+    print("Last model")
+    test_classification_model(trainer, model, data_module, mapping)
+
     print("Best model at: " + trainer.checkpoint_callback.best_model_path)
 
     checkpoint = torch.load(trainer.checkpoint_callback.best_model_path)
     model.load_state_dict(checkpoint["state_dict"])
-    final_model = model
 
-    test_metrics = trainer.test(model=final_model, datamodule=data_module)
-
-    print("Confusion")
-    print(confusion_matrix_to_table(mapping, final_model.test_confusion_matrix_accumulator))
+    test_metrics, confusion_matrix = test_classification_model(trainer, model, data_module, mapping)
 
     onnx_path = configuration_reader.get_artifact_path() / "model.onnx"
 
     print("Exporting to onnx: " + str(onnx_path))
-    final_model.export_onnx(model_configuration, configuration_reader.get_artifact_path() / "model.onnx")
+    model.export_onnx(model_configuration, configuration_reader.get_artifact_path() / "model.onnx")
 
-    return test_metrics, final_model.test_confusion_matrix_accumulator
+    return test_metrics, confusion_matrix
