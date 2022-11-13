@@ -32,7 +32,7 @@ def create_mvit(configuration_reader: ConfigurationReader, model_configuration: 
                 num_classes: int):
     return models.create_multiscale_vision_transformers(
         spatial_size=(model_configuration.clip.height, model_configuration.clip.width),
-        temporal_size=model_configuration.clip.get_frame_count(), head_num_classes=num_classes)
+        temporal_size=model_configuration.clip.get_frame_count(), head_num_classes=num_classes, depth=8)
 
 
 def create_mvit_v2_s(configuration_reader: ConfigurationReader,
