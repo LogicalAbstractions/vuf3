@@ -13,7 +13,7 @@
   "pruning": "l1_unstructured",
   "pruning_amount": 0.5,
   "gradient_clipping": 0.5,
-  "precision": 16,
+  "precision": 32,
   "early_stopping": 10,
   "accelerator": "gpu",
   "device_count": -1,
