@@ -14,7 +14,7 @@
   "pruning_amount": 0.5,
   "gradient_clipping": 0.5,
   "precision": 32,
-  "early_stopping": 10,
+  "early_stopping": 3,
   "accelerator": "gpu",
   "device_count": -1,
   "wandb_project": "vuf3"
