@@ -1,5 +1,5 @@
 {
-  "batch-size": 4,
+  "batch-size": 1,
   "accumulate_batches": 8,
   "epochs": 100,
   "dataloader_workers": 4,
@@ -13,8 +13,8 @@
   "pruning": null,
   "pruning_amount": 0.5,
   "gradient_clipping": 0.5,
-  "precision": 32,
-  "early_stopping": 5,
+  "precision": 16,
+  "early_stopping": 10,
   "accelerator": "gpu",
   "device_count": -1,
   "wandb_project": "vuf3"
