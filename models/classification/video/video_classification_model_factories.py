@@ -24,26 +24,32 @@ def create_r3d_18(configuration_reader: ConfigurationReader,
 
 
 def create_s3d(configuration_reader: ConfigurationReader, model_configuration: VideoClassificationModelConfiguration,
-               num_classes: int):
+               num_classes: int) -> Module:
     return s3d(weights=None, num_classes=num_classes)
 
 
 def create_mvit(configuration_reader: ConfigurationReader, model_configuration: VideoClassificationModelConfiguration,
-                num_classes: int):
+                num_classes: int) -> Module:
     return models.create_multiscale_vision_transformers(
         spatial_size=(model_configuration.clip.height, model_configuration.clip.width),
-        temporal_size=model_configuration.clip.get_frame_count(), head_num_classes=num_classes, depth=8)
+        temporal_size=model_configuration.clip.get_frame_count(), head_num_classes=num_classes)
 
 
+def create_csn(configuration_reader: ConfigurationReader, model_configuration: VideoClassificationModelConfiguration,
+               num_classes: int) -> Module:
+    return models.create_csn(model_num_class=num_classes)
+
+
+def create_resnet(configuration_reader: ConfigurationReader, model_configuration: VideoClassificationModelConfiguration,
+                  num_classes: int) -> Module:
+    return models.create_resnet(model_num_class=num_classes)
+
+
+# Multipathway bug
 def create_slowfast(configuration_reader: ConfigurationReader,
                     model_configuration: VideoClassificationModelConfiguration,
                     num_classes: int):
     return models.create_slowfast(model_num_class=num_classes)
-
-
-def create_mvit_v2_s(configuration_reader: ConfigurationReader,
-                     model_configuration: VideoClassificationModelConfiguration, num_classes: int) -> Module:
-    return mvit_v2_s(weights=None)
 
 
 def create_r2dplus(configuration_reader: ConfigurationReader,
@@ -57,3 +63,5 @@ def register_all_video_classification_models():
     register_video_classification_model("s3d", create_s3d)
     register_video_classification_model("r2d_plus", create_r2dplus)
     register_video_classification_model("slowfast", create_slowfast)
+    register_video_classification_model("resnet", create_resnet)
+    register_video_classification_model("csn", create_csn)

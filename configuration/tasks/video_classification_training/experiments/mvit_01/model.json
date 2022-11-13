@@ -2,8 +2,8 @@
   "base_id": "mvit",
   "clip": {
     "length": 4,
-    "width": 224,
-    "height": 224,
+    "width": 112,
+    "height": 112,
     "frame_rate": 5
   }
 }

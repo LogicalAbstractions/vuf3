@@ -83,7 +83,7 @@ class ConfigurationReader:
 
         argument_parser = ArgumentParser()
         argument_parser.add_argument('-e', '--environment', default="dev", choices=["dev", "test", "prod"])
-        argument_parser.add_argument('-x', '--experiment', default="slowfast_01")
+        argument_parser.add_argument('-x', '--experiment', default="mvit_01")
 
         if arg_parser_customization is not None:
             arg_parser_customization(argument_parser)
@@ -97,7 +97,13 @@ class ConfigurationReader:
 
         if arguments.experiment is not None:
             experiment_path = task_path / "experiments" / arguments.experiment
-            search_paths.append(experiment_path)
+
+            if experiment_path.exists():
+                search_paths.append(experiment_path)
+            else:
+                print(f"Could not find experiment {arguments.experiment} at {experiment_path}")
+        else:
+            print("No experiment selected !")
 
         return ConfigurationReader(arguments.environment, search_paths, task, arguments.experiment, artifact_root_path)
 
