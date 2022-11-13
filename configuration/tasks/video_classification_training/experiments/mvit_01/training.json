@@ -10,7 +10,7 @@
   "quantization_aware": false,
   "quantization_keep_inputs": false,
   "swa_lrs": 0.05,
-  "pruning": "l1_unstructured",
+  "pruning": null,
   "pruning_amount": 0.5,
   "gradient_clipping": 0.5,
   "precision": 32,
