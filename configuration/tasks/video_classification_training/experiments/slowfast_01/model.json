@@ -1,0 +1,9 @@
+{
+  "base_id": "slowfast",
+  "clip": {
+    "length": 4,
+    "width": 224,
+    "height": 224,
+    "frame_rate": 5
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "batch-size": 1,
+  "accumulate_batches": 8,
+  "epochs": 100,
+  "dataloader_workers": 4,
+  "balance_dataset": false,
+  "learning_rate": 1.003,
+  "auto_find_learning_rate": true,
+  "reduce_lr_on_plateau": true,
+  "quantization_aware": false,
+  "quantization_keep_inputs": false,
+  "swa_lrs": 0.05,
+  "pruning": null,
+  "pruning_amount": 0.5,
+  "gradient_clipping": 0.5,
+  "precision": 16,
+  "early_stopping": 10,
+  "accelerator": "gpu",
+  "device_count": -1,
+  "wandb_project": "vuf3"
+}
