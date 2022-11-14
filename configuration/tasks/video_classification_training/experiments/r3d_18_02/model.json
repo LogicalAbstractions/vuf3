@@ -1,9 +1,3 @@
 {
-  "base_id": "r3d_18",
-  "clip": {
-    "length": 4,
-    "width": 398,
-    "height": 398,
-    "frame_rate": 5
-  }
+  "base_id": "r3d_18"
 }
