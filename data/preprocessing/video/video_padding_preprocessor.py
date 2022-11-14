@@ -4,7 +4,9 @@ import torch
 from PIL.Image import Image
 from torch import nn, Tensor
 
-from torchvision.transforms import functional as F, InterpolationMode
+from torchvision.transforms import functional as F, InterpolationMode, AutoAugment
+
+from data.preprocessing.video.augmentation.ex_auto_augmentation import ExAutoAugment
 
 
 def calculate_resize_and_pad(width: int, height: int, max_size: int) -> Tuple[Tuple[int, int], Tuple[int, int]]:
@@ -36,6 +38,12 @@ class VideoPaddingPreprocessor(nn.Module):
         self.mean = list(mean)
         self.std = list(std)
         self.interpolation = interpolation
+        self.auto_augment = ExAutoAugment()
+
+    def __dump_image__(self, tensor: torch.Tensor, path: str):
+        frame = tensor[0]
+        image: Image = F.to_pil_image(frame)
+        image.save(path)
 
     def forward(self, vid: Tensor) -> Tensor:
         need_squeeze = False
@@ -45,19 +53,19 @@ class VideoPaddingPreprocessor(nn.Module):
 
         N, T, C, H, W = vid.shape
         vid = vid.view(-1, C, H, W)
-        # original_image: Image = F.to_pil_image(vid[0])
-        # original_image.save("original.jpg")
+        #self.__dump_image__(vid, "original.jpg")
 
         resize_size, padding = calculate_resize_and_pad(W, H, self.resize_size)
 
         vid = F.resize(vid, list(resize_size), interpolation=self.interpolation)
-        # resized_image: Image = F.to_pil_image(vid[0])
-        # resized_image.save("resized.jpg")
+        #self.__dump_image__(vid, "resized.jpg")
 
         unpacked_padding = [int(padding[1] / 2), int(padding[0] / 2), int(padding[1] / 2), int(padding[0] / 2)]
         vid = F.pad(vid, unpacked_padding)
-        # padded_image: Image = F.to_pil_image(vid[0])
-        # padded_image.save("padded.jpg")
+        #self.__dump_image__(vid, "padded.jpg")
+
+        #vid = self.auto_augment(vid)
+        #self.__dump_image__(vid,"augmented.jpg")
 
         vid = F.convert_image_dtype(vid, torch.float)
         vid = F.normalize(vid, mean=self.mean, std=self.std)
