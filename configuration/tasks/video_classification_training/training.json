@@ -9,7 +9,7 @@
   "reduce_lr_on_plateau": true,
   "quantization_aware": false,
   "quantization_keep_inputs": false,
-  "swa_lrs": 0.0,
+  "swa_lrs": 0.05,
   "pruning": null,
   "pruning_amount": 0.5,
   "gradient_clipping": 0.5,

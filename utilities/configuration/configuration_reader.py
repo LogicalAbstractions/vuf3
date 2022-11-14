@@ -33,12 +33,8 @@ class ConfigurationReader:
         self.experiment = experiment
         self.artifact_root_path = artifact_root_path
 
-        print(f"Environment: {environment}")
-        print(f"Experiment: {experiment}")
-
-        print("Search paths:")
-        for search_path in search_paths:
-            print(f"{search_path}, exists: {search_path.exists()}")
+    def is_environment(self, test_environment: str) -> bool:
+        return self.environment.lower() == test_environment.lower()
 
     def read_object(self, type: Type, id: Optional[str] = None):
         actual_id = id if id is not None else type.id
@@ -79,11 +75,11 @@ class ConfigurationReader:
                             artifact_root_path: Path = Path("./artifacts"),
                             task: str = "video_classification_training",
                             arg_parser_customization: Optional[
-                                Callable[[ArgumentParser], None]] = None) -> 'ConfigurationReader':
+                                Callable[[ArgumentParser], None]] = None) -> List['ConfigurationReader']:
 
         argument_parser = ArgumentParser()
         argument_parser.add_argument('-e', '--environment', default="dev", choices=["dev", "test", "prod"])
-        argument_parser.add_argument('-x', '--experiment', default="r3d_18_02")
+        argument_parser.add_argument('-x', '--experiment', default="mvit2_01")
 
         if arg_parser_customization is not None:
             arg_parser_customization(argument_parser)
@@ -95,17 +91,31 @@ class ConfigurationReader:
 
         search_paths.append(task_path)
 
-        if arguments.experiment is not None:
-            experiment_path = task_path / "experiments" / arguments.experiment
+        result: List[ConfigurationReader] = list()
 
-            if experiment_path.exists():
-                search_paths.append(experiment_path)
-            else:
-                print(f"Could not find experiment {arguments.experiment} at {experiment_path}")
+        if arguments.experiment is not None:
+            experiment_id_str: str = arguments.experiment
+            experiment_ids = [e.strip() for e in experiment_id_str.split(",") if len(e.strip()) > 0]
+
+            print(f"Experiments selected: {experiment_ids}")
+
+            for experiment_id in experiment_ids:
+                experiment_path = task_path / "experiments" / experiment_id
+
+                experiment_search_paths = list(search_paths)
+
+                if experiment_path.exists():
+                    experiment_search_paths.append(experiment_path)
+                    result.append(
+                        ConfigurationReader(arguments.environment, experiment_search_paths, task, experiment_id,
+                                            artifact_root_path))
+                else:
+                    raise FileNotFoundError(f"Could not find experiment {experiment_id} at {experiment_path}")
+
         else:
             print("No experiment selected !")
 
-        return ConfigurationReader(arguments.environment, search_paths, task, arguments.experiment, artifact_root_path)
+        return result
 
     def __read_file_with_environment__(self, path: Path, result: List[Dict[str, Any]]) -> None:
 

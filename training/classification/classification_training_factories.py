@@ -1,6 +1,7 @@
 from typing import Type, Tuple
 
 import torch
+import wandb
 from pytorch_lightning import Trainer, LightningDataModule
 from pytorch_lightning.callbacks import EarlyStopping, StochasticWeightAveraging, ModelPruning, \
     QuantizationAwareTraining, ModelCheckpoint
@@ -13,6 +14,7 @@ from models.classification.classification_module import ClassificationModule
 from models.export.onnx_export import export_classification_model_to_onnx
 from training.classification.classification_training_configuration import ClassificationTrainingConfiguration
 from utilities.configuration.configuration_reader import ConfigurationReader
+from utilities.configuration.configuration_utilities import is_str_configuration_value_valid
 from utilities.json import print_json
 from utilities.tables import confusion_matrix_to_table
 
@@ -42,8 +44,13 @@ def run_classification_training(configuration_reader: ConfigurationReader,
 
     logger = True
 
-    if training_configuration.wandb_project is not None:
+    if is_str_configuration_value_valid(training_configuration.wandb_project) \
+            and configuration_reader.is_environment("prod"):
         print("Enabling wandb")
+
+        if wandb.run is not None:
+            wandb.finish()
+
         logger = WandbLogger(
             save_dir=str(configuration_reader.get_artifact_path() / "wandb"),
             project=training_configuration.wandb_project)
@@ -54,7 +61,7 @@ def run_classification_training(configuration_reader: ConfigurationReader,
 
     callbacks.append(ModelCheckpoint(save_last=True, monitor="val_loss", mode="min", save_weights_only=True))
 
-    if training_configuration.pruning is not None and len(training_configuration.pruning) > 0:
+    if is_str_configuration_value_valid(training_configuration.pruning):
         print("Enabling model pruning: " + training_configuration.pruning + ", amount: " + str(
             training_configuration.pruning_amount))
         callbacks.append(ModelPruning(training_configuration.pruning, amount=training_configuration.pruning_amount))

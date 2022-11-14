@@ -12,11 +12,9 @@ from utilities.json import write_json_file
 from utilities.random import initialize_random_numbers
 
 
-def entrypoint():
-    initialize_random_numbers()
-    register_all_video_classification_models()
+def run_experiment(configuration_reader: ConfigurationReader) -> None:
+    print(f"Starting experiment: {configuration_reader.experiment}, environment: {configuration_reader.environment}")
 
-    configuration_reader = ConfigurationReader.create_from_cmdline(task="video_classification_training")
     datasets, weights, mapping = create_video_classification_datasets(configuration_reader)
     datamodule = create_video_classification_datamodule(configuration_reader, datasets, mapping)
     model = create_classification_module(configuration_reader, VideoClassificationModelConfiguration,
@@ -32,4 +30,10 @@ def entrypoint():
 
 
 if __name__ == "__main__":
-    entrypoint()
+    initialize_random_numbers()
+    register_all_video_classification_models()
+
+    configuration_readers = ConfigurationReader.create_from_cmdline(task="video_classification_training")
+
+    for experiment_configuration_reader in configuration_readers:
+        run_experiment(experiment_configuration_reader)
