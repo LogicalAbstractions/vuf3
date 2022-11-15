@@ -1,4 +1,4 @@
 {
-  "batch-size": 2,
-  "accumulate_batches": 16
+  "batch-size": 1,
+  "accumulate_batches": 32
 }
