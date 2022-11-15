@@ -1,0 +1,12 @@
+{
+  "path": "/media/bglueck/Data/Datasets/soccernet-datasets/4sec-25fps/small/train",
+  "test_path": "/media/bglueck/Data/Datasets/soccernet-datasets/4sec-25fps/small/test",
+  "fix_missing_frames": true,
+  "val_split": 0.3,
+  "clip": {
+    "length": 4,
+    "width": 398,
+    "height": 244,
+    "frame_rate": 25
+  }
+}
