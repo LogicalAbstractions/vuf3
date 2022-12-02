@@ -35,6 +35,8 @@ def create_video_classification_datasets(configuration_reader: ConfigurationRead
     print("Dataset configuration")
     print_json(configuration)
 
+    training_configuration: TrainingConfiguration = configuration_reader.read_object(TrainingConfiguration)
+
     train_val_dataset = FolderVideoClassificationDataset(Path(configuration.path), configuration.clip,
                                                          configuration.fix_missing_frames)
     test_dataset = FolderVideoClassificationDataset(Path(configuration.test_path), configuration.clip,
@@ -60,6 +62,13 @@ def create_video_classification_datasets(configuration_reader: ConfigurationRead
         weights[task] = \
             dataset.get_description().get_class_weight_tensor(dataset.get_mapping().class_indices,
                                                               dataset.get_mapping().class_indices_to_class_id)
+
+        if training_configuration.balance_dataset:
+            weight_dict = dataset.get_description().get_class_weights(dataset.get_mapping().class_indices,
+                                                                      dataset.get_mapping().class_indices_to_class_id)
+
+            print("Class weights for balancing")
+            print_json(weight_dict)
 
     return datasets, weights, mapping
 

@@ -16,10 +16,23 @@ class ClassificationDatasetDescription(Generic[T_ClassId]):
         self.class_ratios: Dict[T_ClassId, float] = dict()
 
         max_count = max(class_counts.values())
+        total_count = sum(class_counts.values())
 
         for class_id, class_count in class_counts.items():
-            self.class_weights[class_id] = float(max_count) / float(class_count)
+            self.class_weights[class_id] = 1 / (float(class_count) / float(total_count))
             self.class_ratios[class_id] = float(class_count) / float(max_count)
+
+    def get_class_weights(self,
+                          class_indices: List[int],
+                          class_indices_to_ids: Dict[int, T_ClassId]) -> Dict[T_ClassId, float]:
+        weights = dict()
+
+        for class_index in class_indices:
+            class_id = class_indices_to_ids[class_index]
+            weight = self.class_weights[class_id]
+            weights[class_id] = weight
+
+        return weights
 
     def get_class_weight_tensor(self,
                                 class_indices: List[int],

@@ -8,6 +8,7 @@ from dataclass_wizard import JSONWizard
 @dataclass
 class TrainingConfiguration(JSONWizard, ABC):
     id: ClassVar[str] = "training"
+    balance_dataset: bool = False
     batch_size: int = 1
     accumulate_batches: int = 1
     epochs: int = 100
