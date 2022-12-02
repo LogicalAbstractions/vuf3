@@ -1,4 +1,4 @@
 {
-  "path": "/mnt/vol_b/data/4sec-5fps/large/train",
-  "test_path": "/mnt/vol_b/data/4sec-5fps/large/test"
+  "path": "/mnt/vol_b/data/unbalanced/4sec-5fps/large/train",
+  "test_path": "/mnt/vol_b/data/unbalanced/4sec-5fps/large/test"
 }
